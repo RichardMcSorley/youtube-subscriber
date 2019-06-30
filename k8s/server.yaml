@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: youtube-sub-deployment
+  labels:
+    app: youtube-sub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  youtube-sub
+  template:
+    metadata:
+      labels:
+        app: youtube-sub
+    spec:
+      containers:
+        - name: youtube-sub
+          image: gcr.io/jinjaio/youtube-subscriber
+          env:
+            - name: URL
+              value: "ytsub.jinja.io"
+          ports:
+          - containerPort: 8080
+          - containerPort: 7000
+          args: ['npm','run','server']
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: youtube-sub
+  labels:
+    app: youtube-sub
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  - name: socketio
+    port: 7000
+    targetPort: 7000
+  selector:
+    app: youtube-sub
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: youtube-sub
+spec:
+  hosts:
+  - "ytsub.jinja.io"
+  gateways:
+  - public-gateway.istio-system.svc.cluster.local
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 8080
+        host: youtube-sub

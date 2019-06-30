@@ -1,0 +1,12 @@
+apiVersion: skaffold/v1beta8
+kind: Config
+build:
+  googleCloudBuild:
+    projectId: jinjaio
+  artifacts:
+  - image: gcr.io/jinjaio/youtube-subscriber
+
+deploy:
+  kubectl:
+    manifests:
+      - k8s/*

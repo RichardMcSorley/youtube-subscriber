@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: koreanow-subscriber
+  labels:
+    app: koreanow-subscriber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  koreanow-subscriber
+  template:
+    metadata:
+      labels:
+        app: koreanow-subscriber
+    spec:
+      containers:
+        - name: koreanow-subscriber
+          image: gcr.io/jinjaio/youtube-subscriber
+          env:
+            - name: CHANNEL_ID
+              value: "UCR-L8oZkHzgDh1ahJhH2WDQ"
+          envFrom:
+            - configMapRef:
+                name: youtube-api-key-2
+          args: ['npm','run','subscriber']

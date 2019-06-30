@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: koreanunnie-subscriber
+  labels:
+    app: koreanunnie-subscriber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  koreanunnie-subscriber
+  template:
+    metadata:
+      labels:
+        app: koreanunnie-subscriber
+    spec:
+      containers:
+        - name: koreanunnie-subscriber
+          image: gcr.io/jinjaio/youtube-subscriber
+          env:
+            - name: CHANNEL_ID
+              value: "UCcA88_Z7wQWMoQ9bKwjuanA"
+          envFrom:
+            - configMapRef:
+                name: youtube-api-key-2
+          args: ['npm','run','subscriber']
