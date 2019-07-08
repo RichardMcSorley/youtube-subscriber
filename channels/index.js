@@ -27,7 +27,7 @@ function launchPubSub () {
 
   pubsub.on('unsubscribe', data => DEV && console.log('unsubscribed:', data.topic))
 
-  pubsub.on('listen', () => DEV && console.log('listening'))
+  pubsub.on('listen', () => console.log('listening'))
 
   pubsub.listen(port)
 
