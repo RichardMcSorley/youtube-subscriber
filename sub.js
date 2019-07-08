@@ -10,7 +10,6 @@ startClient().then((c)=>{
 
 const videoConstructor = item => {
     const { id, snippet } = item
-    const { videoId } = id
     const {
       channelId,
       title,
@@ -22,12 +21,12 @@ const videoConstructor = item => {
     } = snippet
     const { high } = thumbnails
     const youtubeVideoURLBase = "https://youtu.be/"
-    const videoUrl = youtubeVideoURLBase + videoId
+    const videoUrl = youtubeVideoURLBase + id
     const { url } = high
     const thumbnailUrl = url
   
     return {
-      videoId,
+      videoId: id,
       title,
       channelTitle,
       liveBroadcastContent,
