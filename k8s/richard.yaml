@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: richard-subscriber
+  labels:
+    app: richard-subscriber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  richard-subscriber
+  template:
+    metadata:
+      labels:
+        app: richard-subscriber
+    spec:
+      containers:
+        - name: richard-subscriber
+          image: gcr.io/jinjaio/youtube-subscriber
+          env:
+            - name: CHANNEL_ID
+              value: "UCT0CwQ6WvqojjCRqG3RblFQ"
+          envFrom:
+            - configMapRef:
+                name: youtube-api-key-2
+          args: ['npm','run','subscriber']

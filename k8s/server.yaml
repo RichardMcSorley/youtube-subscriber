@@ -19,7 +19,7 @@ spec:
           image: gcr.io/jinjaio/youtube-subscriber
           env:
             - name: URL
-              value: "ytsub.jinja.io"
+              value: "https://ytsub.jinja.io"
           ports:
           - containerPort: 8080
           - containerPort: 7000
