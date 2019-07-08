@@ -1,6 +1,6 @@
 const ngrok = require('ngrok')
 const { Url } = require('../utilities')
-const port = process.env.HUB_PORT || 8000
+const port = process.env.HUB_PORT || 8080
 
 module.exports = async function doNgrok () {
   const url = await ngrok.connect(port).catch(err => console.error(err))

@@ -27,7 +27,6 @@ function requestChannel (id) {
   console.log('new channel id:', id)
 
   channelNameSpace.on('connect', nspClient => {
-
     nspClient.on('disconnect', message => {
       message === 'transport close' && channelNameSpace.clients((err, clients) => {
         if (err) throw err
